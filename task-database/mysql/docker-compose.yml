@@ -1,0 +1,14 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/var/lib/mysql:Z
+      - ./conf.d:/etc/mysql/conf.d:Z
+      - ./init:/docker-entrypoint-initdb.d:Z
+    restart: unless-stopped
