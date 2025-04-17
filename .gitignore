@@ -1,0 +1,44 @@
+### 공통 ###
+*.log
+*.tmp
+
+# API #
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+*.jar
+*.war
+
+# UI #
+node_modules
+dist
+dist-ssr
+*.local
+npm-debug.log*
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+
+### VS Code ###
+.vscode/
