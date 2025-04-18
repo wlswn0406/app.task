@@ -3,7 +3,24 @@
 
 - [프로젝트 환경](#프로젝트-환경)
 - [프로젝트 구조](#프로젝트-구조)
-- [프로젝트 실행](#프로젝트-실행-및-빌드)
+- [프로젝트 실행](#프로젝트-실행)
+
+
+**기능 구현**
+- Auth
+  - [ ] 로그인
+  - [ ] 회원가입
+- Todo
+  - [ ] 등록/수정/삭제
+  - [ ] 완료, 중요 체크/해제
+  - [ ] 알림
+- Calendar
+  - [ ] 등록/수정/삭제
+  - [ ] 알림
+- System
+  - [ ] 로그
+  - [ ] Todo 알림 처리
+  - [ ] Calendar 알림 처리
 
 
 
@@ -65,7 +82,10 @@ src.test/
 
 
 
-## 프로젝트 실행 및 빌드
+## 프로젝트 실행
+
+- git, java 설치 필요
+
 
 **프로젝트 실행**
 ```bash
@@ -75,18 +95,20 @@ cd ./app.task/task-server
 # 개발 서버 실행
 ./gradlew bootRun
 
-# 실행시 프로파일 지정
+## 프로파일 지정
 ./gradlew bootRun --args='--spring.profiles.active=test'
-```
 
-**프로젝트 빌드**
-```bash
-# 빌드
+
+# 프로젝트 빌드
 ./gradlew build
 
-# 실행
+## 실행
 java -jar ./build/libs/task-server-0.0.1-SNAPSHOT.jar
+
+## 프로파일 지정
+java -jar ./build/libs/task-server-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
 ```
 
-API 문서    
+
+API 문서  
 http://localhost:9000/docs/index.html
