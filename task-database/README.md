@@ -7,26 +7,28 @@
 mysql/
 ├── conf.d                   # mysql 설정 파일 디렉토리
 │   └── mysqld.cnf           # mysql 커스텀 설정 파일
-├── init                     # 데이터베이스 초기화 스크립트
+├── init                     # 데이터베이스 초기화 파일 디렉토리
 │   ├── schema.sql           # 테이블 생성 스크립트
-│   └── data.sql             # 초기 데이터 삽입 스크립트
+│   └── data.sql             # 데이터 삽입 스크립트
 ├── .env                     # 환경 변수 파일
 ├── docker-compose.yml       # 컨테이너 설정 파일
-└── stop-container.sh        # 컨테이너 삭제 파일
+└── stop-container.sh        # 컨테이너 삭제 스크립트
 ```
 
 
 **실행 방법**
 
 - 리눅스 환경
-- podman, podman-compose 설치 필요
+- git, podman, podman-compose 설치 필요
 
 ```bash
+git clone https://github.com/wlswn0406/app.task.git
+cd ./app.task/task-database/mysql
+
 # 컨테이너 실행
-cd ./mysql
 podman-compose up -d
 
-# 컨테이너 접속
+## 컨테이너 접속
 podman exec -it mysql_container mysql -u user -p
 
 
@@ -46,7 +48,7 @@ sudo kill -9 <PID>
 ### 사용자 테이블
 
 **users**  
-: 로그인에 필요한 기본 정보만 저장하는 테이블  
+: 사용자 최소 정보만 저장하는 테이블  
 
 설명 | 컬럼 | 타입 | 예시
 ---|---|---|---
@@ -66,14 +68,16 @@ sudo kill -9 <PID>
 설명 | 컬럼 | 타입 | 예시
 ---|---|---|---
 기본키 | cid | INT | 1
+외래키 | user_id | INT | 1 (users.uid)
 카테고리명 | name | VARCHAR(50) | 할 일 목록
 순서 | sort_order | INT | 1
 체크 여부 | is_checked | TINYINT(1) | 1 (체크)
-생성자 | created_by | INT | 2 (users.uid)
 생성일 | created_at | TIMESTAMP | 2025-04-01 12:00:00
 수정일 | updated_at | DATETIME | 2025-04-01 12:00:00
 
-- 생성자(사용자)에 한해 카테고리가 생성
+```
+사용자 1 --> 할일 카테고리 N
+```
 
 
 **todos**  
@@ -93,6 +97,10 @@ sudo kill -9 <PID>
 생성일 | created_at | TIMESTAMP | 2025-04-01 12:00:00
 수정일 | updated_at | DATETIME | 2025-04-01 12:00:00
 
+```
+할일 카테고리 1 --> 할일 N
+```
+
 
 **todos_noti**  
 : 할 일에 알림이 설정된 경우 알림에 대한 정보를 저장하는 테이블
@@ -107,6 +115,11 @@ sudo kill -9 <PID>
 알림 상태 | notify_status | VARCHAR(20) | pending (pending: 대기 중, sent: 전송 완료, failed: 실패)
 생성일 | created_at | TIMESTAMP | 2025-04-01 12:00:00
 
+```
+할일 1 --> 알림 N
+```
+
+단계
 - 할 일에 알림을 최초로 설정하면 todos_noti에 알림 정보가 등록됨
 - todos의 알림 여부를 취소하면 todos_noti에서 알림 여부가 취소로 수정됨
 - todos의 알림 여부가 알림이면 등록한 알림 일시에 설정한 타입으로 알림 정보가 전송됨
@@ -128,4 +141,4 @@ sudo kill -9 <PID>
 생성일 | created_at | TIMESTAMP | 2025-04-01 12:00:00
 
 - 로그 타입 : 로그가 발생한 테이블 이름 기록
-- 발생자 : 로그를 발생시킨 사용자나 시스템을 구분 (사용자 경우 아이디를 기록)
+- 발생자 : 로그를 발생시킨 사용자와 시스템을 구분 (사용자 경우 아이디를 기록)
