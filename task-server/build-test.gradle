@@ -1,0 +1,100 @@
+// TEST
+
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    outputs.dir(snippetsDir)
+}
+
+tasks.register('generateSnippetsIndex') {
+    dependsOn(tasks.test)
+    inputs.dir(snippetsDir)
+
+    doLast {
+        def snippetsDir = file("build/generated-snippets")
+        def indexFile = file("src/main/resources/asciidoc/auto-generated-snippets.adoc")
+
+        if (!snippetsDir.exists()) {
+            indexFile.text = "// 스니펫이 생성되지 않았습니다. 테스트를 실행하세요."
+            return
+        }
+
+        def endpoints = []
+        snippetsDir.eachFileRecurse { file ->
+            if (file.isDirectory() && new File(file, "http-request.adoc").exists()) {
+                def relative = snippetsDir.toPath().relativize(file.toPath()).toString().replace('\\', '/')
+                endpoints.add(relative)
+            }
+        }
+        endpoints.sort()
+
+        indexFile.text = ""
+        endpoints.sort().each { endpoint ->
+
+            indexFile.append("[#${endpoint}]\n")
+            indexFile.append("== ${endpoint}\n\n")
+
+            indexFile.append("[#${endpoint}-request]\n")
+            indexFile.append("=== 요청\n\n")
+            indexFile.append("include::{snippets}/${endpoint}/http-request.adoc[]\n\n")
+
+            def curlFile = new File(snippetsDir, "${endpoint}/curl-request.adoc")
+            if (curlFile.exists()) {
+                indexFile.append("[#${endpoint}-curl]\n")
+                indexFile.append("=== CURL\n\n")
+                indexFile.append("include::{snippets}/${endpoint}/curl-request.adoc[]\n\n")
+            }
+
+            def requestFieldsFile = new File(snippetsDir, "${endpoint}/request-fields.adoc")
+            if (requestFieldsFile.exists()) {
+                indexFile.append("[#${endpoint}-request-fields]\n")
+                indexFile.append("=== 요청 필드\n\n")
+                indexFile.append("include::{snippets}/${endpoint}/request-fields.adoc[]\n\n")
+            }
+
+            def httpResponseFile = new File(snippetsDir, "${endpoint}/http-response.adoc")
+            if (httpResponseFile.exists()) {
+                indexFile.append("[#${endpoint}-response]\n")
+                indexFile.append("=== 응답\n\n")
+                indexFile.append("include::{snippets}/${endpoint}/http-response.adoc[]\n\n")
+            }
+
+            def responseFieldsFile = new File(snippetsDir, "${endpoint}/response-fields.adoc")
+            if (responseFieldsFile.exists()) {
+                indexFile.append("[#${endpoint}-response-fields]\n")
+                indexFile.append("=== 응답 필드\n\n")
+                indexFile.append("include::{snippets}/${endpoint}/response-fields.adoc[]\n\n")
+            }
+
+            indexFile.append("\n")
+        }
+
+    }
+}
+
+tasks.named('asciidoctor') {
+    dependsOn(tasks.generateSnippetsIndex)
+    inputs.dir(snippetsDir)
+
+    doFirst {
+        delete file('src/main/resources/static/docs')
+    }
+
+    configure {
+        baseDir = file('src/main/resources/asciidoc')
+        sourceDir = file('src/main/resources/asciidoc')
+        outputDir = file('src/main/resources/static/docs')
+        attributes = [
+                'encoding': 'utf-8',
+                'snippets': snippetsDir
+        ]
+    }
+
+}
+
+tasks.named('build') {
+    dependsOn(tasks.asciidoctor)
+}

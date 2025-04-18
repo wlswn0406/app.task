@@ -1,0 +1,19 @@
+[#api/test]
+== api/test
+
+[#api/test-request]
+=== 요청
+
+include::{snippets}/api/test/http-request.adoc[]
+
+[#api/test-curl]
+=== CURL
+
+include::{snippets}/api/test/curl-request.adoc[]
+
+[#api/test-response]
+=== 응답
+
+include::{snippets}/api/test/http-response.adoc[]
+
+
