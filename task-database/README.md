@@ -28,9 +28,6 @@ cd ./app.task/task-database/mysql
 # 컨테이너 실행
 podman-compose up -d
 
-## 컨테이너 접속
-podman exec -it mysql_container mysql -u user -p
-
 
 # 컨테이너 삭제
 ./stop-container.sh mysql_container
@@ -38,6 +35,27 @@ podman exec -it mysql_container mysql -u user -p
 ## 포트 확인 및 삭제
 sudo lsof -i :3306
 sudo kill -9 <PID>
+
+
+# 컨테이너 접속
+podman exec -it mysql_container mysql -u user -p
+
+## 전체 테이블 삭제
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS todos_noti;
+DROP TABLE IF EXISTS todos;
+DROP TABLE IF EXISTS todo_category;
+DROP TABLE IF EXISTS users;
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+## 전체 데이터 초기화
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE todos;
+TRUNCATE TABLE todo_category;
+TRUNCATE TABLE todos_noti;
+TRUNCATE TABLE users;
+SET FOREIGN_KEY_CHECKS = 1;
 ```
 
 
