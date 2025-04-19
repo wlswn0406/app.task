@@ -3,13 +3,16 @@
 
 **기능 구현**
 - Common
+  - [ ] 페이지 레이아웃
+  - [x] 공통 오류 페이지
   - [ ] 성공/실패 모달
-  - [ ] 파일 업로드
   - [ ] 검색
+  - [ ] 파일 업로드
 - Auth
-  - [ ] 로그인 화면
-  - [ ] 회원가입 화면
+  - [ ] 로그인 화면 및 기능
+  - [ ] 회원가입 화면 및 기능
 - Todo
+  - [ ] Todo 목록 화면 
   - [ ] Todo 카테고리 등록/수정
   - [ ] Todo 카테고리 별 할일 리스트
   - [ ] Todo 필터링 (전체, 중요, 완료)
@@ -111,7 +114,7 @@ View → (Hooks) → Services → API → API 서버
 
 ## 프로젝트 실행
 
-- node, npm 설치 필요
+- node 설치 필요
 
 ```bash
 git clone https://github.com/wlswn0406/app.task.git
