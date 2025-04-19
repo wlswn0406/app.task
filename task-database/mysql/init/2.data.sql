@@ -6,27 +6,28 @@ VALUES
 
 
 -- 카테고리 데이터 삽입
-INSERT INTO todo_category (name, sort_order, created_by, created_at)
+INSERT INTO todo_category (user_id, name, sort_order, created_at)
 VALUES
-('카테고리1', 1, 1, NOW()),
-('카테고리2', 2, 1, NOW()),
-('카테고리3', 3, 1, NOW());
-
-INSERT INTO todo_category (name, sort_order, created_by, created_at)
-VALUES
-('카테고리1', 1, 2, NOW()),
-('카테고리2', 2, 2, NOW());
+(1, 'A', 1, NOW()),
+(1, 'AA', 2, NOW()),
+(1, 'AAA', 3, NOW()),
+(2, 'B', 1, NOW()),
+(2, 'BB', 2, NOW());
 
 
 -- 할일 데이터 삽입
-INSERT INTO todos (category_id, title, sort_order, created_by, created_at)
+INSERT INTO todos (category_id, title, sort_order, created_at)
 VALUES
-(1, '할일1', 1, 1, NOW()),
-(1, '할일2', 2, 1, NOW()),
-(1, '할일3', 3, 1, NOW()),
-(2, '할일1', 1, 1, NOW());
+(1, 'A-todo1', 1, NOW()),
+(1, 'A-todo2', 2, NOW()),
+(1, 'A-todo3', 3, NOW()),
+(2, 'AA-todo1', 1, NOW()),
+(3, 'AAA-todo1', 1, NOW()),
+(4, 'B-todo1', 1, NOW()),
+(5, 'BB-todo1', 1, NOW());
 
-INSERT INTO todos (category_id, title, sort_order, created_by, created_at)
-VALUES
-(4, '할일1', 1, 2, NOW()),
-(5, '할일1', 1, 2, NOW());
+
+-- 데이터 초기화
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE todos;
+SET FOREIGN_KEY_CHECKS = 1;
