@@ -1,5 +1,6 @@
-package app.task.api.todo;
+package app.task.slice.api.todo;
 
+import app.task.api.todo.TodoMapper;
 import app.task.domain.Todo;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;

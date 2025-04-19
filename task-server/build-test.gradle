@@ -9,8 +9,27 @@ tasks.named('test', Test) {
     outputs.dir(snippetsDir)
 }
 
+tasks.register('unitTest', Test) {
+    group = 'verification'
+    include 'app/task/unit/**'
+    useJUnitPlatform()
+}
+
+tasks.register('sliceTest', Test) {
+    group = 'verification'
+    include 'app/task/slice/**'
+    useJUnitPlatform()
+}
+
+tasks.register('itTest', Test) {
+    group = 'verification'
+    include 'app/task/it/**'
+    useJUnitPlatform()
+    outputs.dir(snippetsDir)
+}
+
 tasks.register('generateSnippetsIndex') {
-    dependsOn(tasks.test)
+    dependsOn(tasks.itTest)
     inputs.dir(snippetsDir)
 
     doLast {

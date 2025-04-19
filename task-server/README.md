@@ -76,9 +76,16 @@ src.main.resources/
 **테스트**
 ```bash
 src.test/
-├── utils                    # 공통 유틸리티 테스트
-└── api                      # REST API 엔드포인트 테스트
+├── it                       # 통합 테스트
+├── slice                    # 슬라이스 테스트
+└── unit                     # 유닛 테스트
 ```
+
+- 통합 테스트에 한해 API 문서 생성
+
+
+API 문서  
+http://localhost:9000/docs/index.html
 
 
 
@@ -99,6 +106,10 @@ cd ./app.task/task-server
 ./gradlew bootRun --args='--spring.profiles.active=test'
 
 
+## 통합 테스트
+./gradlew itTest
+
+
 # 프로젝트 빌드
 ./gradlew build
 
@@ -108,7 +119,3 @@ java -jar ./build/libs/task-server-0.0.1-SNAPSHOT.jar
 ## 프로파일 지정
 java -jar ./build/libs/task-server-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
 ```
-
-
-API 문서  
-http://localhost:9000/docs/index.html

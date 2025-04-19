@@ -1,7 +1,7 @@
 package app.task.api;
 
-import app.task.common.ApiResponse;
-import app.task.common.util.LoggerUtil;
+import app.task.it.ApiResponse;
+import app.task.it.util.LoggerUtil;
 import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
