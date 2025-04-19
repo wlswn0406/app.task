@@ -38,9 +38,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if(token != null && jwtTokenProvider.validateToken(token)) {
             String userId = jwtTokenProvider.getUserId(token);
-
-            System.out.println(userId);
             SessionUtil.setCurrentUserId(request.getSession(), userId);
+
         } else {
             HttpSession session = request.getSession(false);
             if(session != null) {
