@@ -21,6 +21,10 @@
   - [ ] 로그
   - [ ] Todo 알림 처리
   - [ ] Calendar 알림 처리
+- Test
+  - [ ] 통합 테스트 
+  - [ ] 슬라이스 테스트 
+  - [ ] 유닛 테스트 
 
 
 
@@ -82,7 +86,8 @@ src.test/
 ```
 
 - 통합 테스트에 한해 API 문서 생성
-
+- 슬라이스 테스트는 특정 계층의 컴포넌트에 대해 테스트함
+- 유닛 테스트는 의존성을 모두 Mock 객체로 대체한 순수 로직 단위를 테스트함
 
 API 문서  
 http://localhost:9000/docs/index.html
@@ -106,8 +111,11 @@ cd ./app.task/task-server
 ./gradlew bootRun --args='--spring.profiles.active=test'
 
 
-## 통합 테스트
+# 통합 테스트
 ./gradlew itTest
+
+## 통합 테스트 후 API 문서 생성
+./gradlew asciidoctor
 
 
 # 프로젝트 빌드
