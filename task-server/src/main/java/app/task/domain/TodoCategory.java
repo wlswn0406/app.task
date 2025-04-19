@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
  */
 public record TodoCategory(
     Integer cid,
+    Integer userId,
     String name,
     Integer sortOrder,
     Boolean isChecked,
-    Boolean isDeleted,
-    Integer createdBy,
+    String userName,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {}

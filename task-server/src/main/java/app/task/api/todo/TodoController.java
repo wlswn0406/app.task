@@ -2,10 +2,11 @@ package app.task.api.todo;
 
 import app.task.api.AbstractController;
 import app.task.api.todo.dto.TodoCreate;
-import app.task.api.todo.dto.TodoResponse;
+import app.task.api.todo.dto.TodoResponseDTO;
 import app.task.api.todo.dto.TodoUpdate;
 import app.task.common.ApiResponse;
 import app.task.common.util.LoggerUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -35,10 +36,11 @@ public class TodoController extends AbstractController {
         return null;
     }
 
-    // [todo] 모든 할일 가져오기
     @GetMapping("/todos")
-    public ResponseEntity<ApiResponse<List<?>>> getTodos() {
-        return null;
+    public ResponseEntity<ApiResponse<List<?>>> getTodos(HttpServletRequest request) {
+        String userId = super.getCurrentUserId(request);
+        List<TodoResponseDTO> result = todoService.findAllTodos(userId);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     // [todo] 할일 등록

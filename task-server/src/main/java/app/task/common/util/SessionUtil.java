@@ -14,4 +14,9 @@ public class SessionUtil {
         session.setAttribute("userId", userId);
     }
 
+    // 세션에서 사용자 ID 제거
+    public static void removeCurrentUserId(HttpSession session) {
+        session.removeAttribute("userId");
+    }
+    
 }

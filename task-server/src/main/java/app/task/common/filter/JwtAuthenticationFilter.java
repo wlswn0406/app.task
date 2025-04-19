@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -37,7 +38,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if(token != null && jwtTokenProvider.validateToken(token)) {
             String userId = jwtTokenProvider.getUserId(token);
+
+            System.out.println(userId);
             SessionUtil.setCurrentUserId(request.getSession(), userId);
+        } else {
+            HttpSession session = request.getSession(false);
+            if(session != null) {
+                SessionUtil.removeCurrentUserId(session);
+            }
         }
 
         filterChain.doFilter(request, response);

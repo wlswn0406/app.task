@@ -4,7 +4,40 @@
 <mapper namespace="app.task.api.todo.TodoMapper">
 
     <select id="findTodo" parameterType="Integer" resultType="app.task.domain.Todo">
-        SELECT * FROM todos WHERE tid = #{id}
+        SELECT tid
+             , category_id
+             , title
+             , description
+             , sort_order
+             , is_done
+             , is_important
+             , is_notified
+             , created_at
+             , updated_at
+
+        FROM   todos
+        WHERE  tid = #{id}
+    </select>
+
+    <select id="findAllTodos" parameterType="String" resultType="app.task.api.todo.dto.TodoResponseDTO">
+        SELECT t.tid
+             , t.category_id
+             , t.title
+             , t.description
+             , t.sort_order
+             , t.is_done
+             , t.is_important
+             , t.is_notified
+
+             , c.name       AS category_name
+             , c.sort_order AS category_sort_order
+             , c.is_checked
+             , c.user_id
+
+        FROM   todos t
+        JOIN   todo_category c ON c.cid = t.category_id
+        JOIN   users u ON u.uid = c.user_id
+        WHERE  u.id = #{userId}
     </select>
 
 </mapper>

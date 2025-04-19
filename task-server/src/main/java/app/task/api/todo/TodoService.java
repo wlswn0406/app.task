@@ -1,17 +1,14 @@
 package app.task.api.todo;
 
 import app.task.api.todo.dto.TodoCreate;
-import app.task.api.todo.dto.TodoResponse;
+import app.task.api.todo.dto.TodoResponseDTO;
 import app.task.api.todo.dto.TodoUpdate;
 import app.task.domain.Todo;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,26 +18,26 @@ public class TodoService {
 
     private final TodoMapper todoMapper;
 
-    public TodoResponse findTodo(Integer id) {
+    public TodoResponseDTO findTodo(Integer id) {
         return todoMapper.findTodo(id)
-                .map(todo -> modelMapper.map(todo, TodoResponse.class))
+                .map(todo -> modelMapper.map(todo, TodoResponseDTO.class))
                 .orElse(null);
     }
 
-    public List<TodoResponse> findImportantTodos() {
+    public List<TodoResponseDTO> findImportantTodos() {
         return null;
     }
 
-    public List<TodoResponse> findAllTodos() {
-        return null;
+    public List<TodoResponseDTO> findAllTodos(String userId) {
+        return todoMapper.findAllTodos(userId);
     }
 
     //@Transactional
-    public TodoResponse create(TodoCreate todo) {
+    public TodoResponseDTO create(TodoCreate todo) {
         return null;
     }
 
-    public TodoResponse update(Integer id, TodoUpdate todo) {
+    public TodoResponseDTO update(Integer id, TodoUpdate todo) {
         return null;
     }
 
