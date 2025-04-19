@@ -93,7 +93,6 @@ sudo kill -9 <PID>
 완료 여부 | is_done | TINYINT(1) | 1 (완료)
 중요 여부 | is_important | TINYINT(1) | 1 (중요)
 알림 여부 | is_notified | TINYINT(1) | 1 (알림)
-생성자 | created_by | INT | 2 (users.uid)
 생성일 | created_at | TIMESTAMP | 2025-04-01 12:00:00
 수정일 | updated_at | DATETIME | 2025-04-01 12:00:00
 
@@ -135,10 +134,10 @@ sudo kill -9 <PID>
 ---|---|---|---
 기본키 | id | INT | 1
 외래키 | reference_id | INT | 1 (todos.tid, users.uid, todos_noti.nid)
-로그 타입 | log_type | VARCHAR(255) | todos_noti
+테이블이름 | reference_table | VARCHAR(255) | todos_noti
 로그 내용 | log_message | TEXT | 알림 전송 성공
 발생자 | actor | VARCHAR(50) | SYSTEM
 생성일 | created_at | TIMESTAMP | 2025-04-01 12:00:00
 
-- 로그 타입 : 로그가 발생한 테이블 이름 기록
+- 테이블이름 : 로그가 발생한 테이블 이름 기록
 - 발생자 : 로그를 발생시킨 사용자와 시스템을 구분 (사용자 경우 아이디를 기록)
