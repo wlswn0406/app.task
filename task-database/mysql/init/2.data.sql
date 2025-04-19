@@ -25,9 +25,3 @@ VALUES
 (3, 'AAA-todo1', 1, NOW()),
 (4, 'B-todo1', 1, NOW()),
 (5, 'BB-todo1', 1, NOW());
-
-
--- 데이터 초기화
-SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE TABLE todos;
-SET FOREIGN_KEY_CHECKS = 1;
