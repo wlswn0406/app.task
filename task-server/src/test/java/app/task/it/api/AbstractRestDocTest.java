@@ -1,5 +1,6 @@
 package app.task.it.api;
 
+import app.task.common.filter.JwtAuthenticationFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +30,21 @@ public abstract class AbstractRestDocTest {
     @Autowired
     protected WebApplicationContext context;
 
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
     protected MockMvc mockMvc;
-
-
 
     @BeforeEach
     public void setUp(RestDocumentationContextProvider provider) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
-                .apply(MockMvcRestDocumentation.documentationConfiguration(provider)
-                        .uris()
-                        .withScheme("http")
-                        .withHost(serverHost)
-                        .withPort(serverPort))
-                .build();
+            .addFilter(jwtAuthenticationFilter)
+            .apply(MockMvcRestDocumentation.documentationConfiguration(provider)
+                .uris()
+                .withScheme("http")
+                .withHost(serverHost)
+                .withPort(serverPort))
+            .build();
     }
 
 }

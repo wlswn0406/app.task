@@ -6,8 +6,6 @@ import app.task.it.api.AbstractRestDocTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -27,6 +25,8 @@ public class AuthControllerTest extends AbstractRestDocTest {
     @Autowired
     private AuthService authService;
 
+    // [todo] 회원가입
+
     @Test
     public void loginTest() throws Exception {
 
@@ -39,24 +39,24 @@ public class AuthControllerTest extends AbstractRestDocTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginDTO)))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data").exists())
-                .andExpect(jsonPath("$.data.id").exists())
-                .andExpect(jsonPath("$.data.token").exists())
-                .andDo(document("/api/auth/login",
-                        requestFields(
-                                fieldWithPath("id").description("사용자 아이디"),
-                                fieldWithPath("password").description("사용자 비밀번호")
-                        ),
-                        responseFields(
-                                fieldWithPath("success").description("API 성공 여부"),
-                                fieldWithPath("message").description("응답 메시지").optional(),
-                                fieldWithPath("data").description("로그인 응답 데이터"),
-                                fieldWithPath("data.id").description("사용자 ID"),
-                                fieldWithPath("data.token").description("인증 토큰").optional()
-                        )
-                ));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.success").value(true))
+            .andExpect(jsonPath("$.data").exists())
+            .andExpect(jsonPath("$.data.id").exists())
+            .andExpect(jsonPath("$.data.token").exists())
+            .andDo(document("/api/auth/login",
+                requestFields(
+                    fieldWithPath("id").description("사용자 아이디"),
+                    fieldWithPath("password").description("사용자 비밀번호")
+                ),
+                responseFields(
+                    fieldWithPath("success").description("API 성공 여부"),
+                    fieldWithPath("message").description("응답 메시지").optional(),
+                    fieldWithPath("data").description("로그인 응답 데이터"),
+                    fieldWithPath("data.id").description("사용자 ID"),
+                    fieldWithPath("data.token").description("인증 토큰")
+                )
+            ));
     }
 
 }
